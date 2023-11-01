@@ -83,12 +83,12 @@ user_input = tk.Entry(window, textvariable=var, foreground='grey')
 user_input.insert(0, 'Type here...')
 
 # Create timer for 1 minute
-initial = 60
-time = 60
+initial = 5
+time = 5
 timer_label = tk.Label(text=f"Time Remaining: {initial}", font=('Times New Roman', 20, 'bold'))
 
 times_up = False
-time_left = 60
+time_left = 5
 
 
 def timer(count):
@@ -108,7 +108,7 @@ def on_entry_click(event):
     if user_input.get() == "Type here...":
         user_input.delete(0, tk.END)
         user_input.configure(foreground="black")
-        timer(60)
+        timer(5)
 
 
 def on_focus_out(event):
@@ -173,6 +173,14 @@ def sent_input(event):
                         user_input.destroy()
                         timer_label.destroy()
                         total_rights = word_right + 1
+                        with open('highscore.txt') as file:
+                            high_score = file.read()
+                            if total_rights > int(high_score):
+                                with open('highscore.txt', mode='w') as file:
+                                    file.write(f'{total_rights}')
+                                new_highscore_label = tk.Label(text='New Highscore!', font=('Times New Roman', 20, 'bold', 'italic'), fg='Green')
+                                new_highscore_label.pack()
+
                         if 40 <= total_rights <= 60:
                             standard = 'AVERAGE'
                         elif total_rights >= 80:
@@ -191,7 +199,11 @@ def sent_input(event):
                             outro.place(x=60, y=200)
                             time_left_label = tk.Label(text=f"Time Remaining: {time_left} seconds",
                                                        font=('Times New Roman', 20, 'bold', 'italic'))
-                            time_left_label.pack(pady=(60, 0))
+                            time_left_label.pack(pady=(30, 0))
+                            with open('highscore.txt') as file:
+                                high_score = file.read()
+                                high_score_label = tk.Label(text=f'Highscore: {high_score}', font=('Times New Roman', 20, 'bold'))
+                                high_score_label.pack(pady=(22, 0))
                         elif wrongs < 0:
                             actual = len(total_typed) + 1
                             percentage = (word_right + 1) / actual * 100
@@ -204,7 +216,11 @@ def sent_input(event):
                             outro.place(x=60, y=200)
                             time_left_label = tk.Label(text=f"Time Remaining: {time_left} seconds",
                                                        font=('Times New Roman', 20, 'bold', 'italic'))
-                            time_left_label.pack(pady=(60, 0))
+                            time_left_label.pack(pady=(30, 0))
+                            with open('highscore.txt') as file:
+                                high_score = file.read()
+                                high_score_label = tk.Label(text=f'Highscore: {high_score}', font=('Times New Roman', 20, 'bold'))
+                                high_score_label.pack(pady=(22, 0))
 
                         else:
                             outro = tk.Label(
@@ -215,7 +231,13 @@ def sent_input(event):
                                 font=('Times New Roman', 20, 'bold', 'italic'), borderwidth=1, relief="solid")
                             outro.place(x=60, y=200)
                             time_left_label = tk.Label(text=f"Time Remaining: {time_left} seconds", font=('Times New Roman', 20, 'bold', 'italic'))
-                            time_left_label.pack(pady=(60, 0))
+                            time_left_label.pack(pady=(30, 0))
+                            with open('highscore.txt') as file:
+                                high_score = file.read()
+                                high_score_label = tk.Label(text=f'Highscore: {high_score}', font=('Times New Roman', 20, 'bold'))
+                                high_score_label.pack(pady=(22, 0))
+
+
 
                 user_input.delete(0, 'end')
 
