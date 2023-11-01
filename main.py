@@ -83,12 +83,12 @@ user_input = tk.Entry(window, textvariable=var, foreground='grey')
 user_input.insert(0, 'Type here...')
 
 # Create timer for 1 minute
-initial = 5
-time = 5
+initial = 60
+time = 60
 timer_label = tk.Label(text=f"Time Remaining: {initial}", font=('Times New Roman', 20, 'bold'))
 
 times_up = False
-time_left = 5
+time_left = 60
 
 
 def timer(count):
@@ -108,7 +108,7 @@ def on_entry_click(event):
     if user_input.get() == "Type here...":
         user_input.delete(0, tk.END)
         user_input.configure(foreground="black")
-        timer(5)
+        timer(60)
 
 
 def on_focus_out(event):
